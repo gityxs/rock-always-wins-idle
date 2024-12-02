@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Rock Always Wins Idle!</title>
+    <!-- SCRIPT FOR GOOGLE ANALYTICS -->
+    <!-- <script id='googleAnalyticsTrigger'>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NHE7ZM3T8H');
+    </script> -->
+    <link rel="icon" href="img/rock-icon.png">
+
+    <!-- NumberFormatting: https://github.com/erosson/swarm-numberformat -->
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src='https://cdn.rawgit.com/erosson/swarm-numberformat/v0.4.0/dist/swarm-numberformat.js'></script>
+    <script src='https://cdn.rawgit.com/MikeMcl/decimal.js/v7.0.1/decimal.js'></script>
+    <script src='public/bundle.js'></script>
+    <!-- <script async src='https://www.googletagmanager.com/gtag/js?id=G-NHE7ZM3T8H'></script> -->
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Inconsolata'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Russo+One'>
+    
+    <link rel='stylesheet' href='css/button.css'></link>
+    <link rel='stylesheet' href='css/modal.css'></link>
+    <link rel='stylesheet' href='css/nav.css'></link>
+    <link rel='stylesheet' href='css/tooltip.css'></link>
+    <link rel='stylesheet' href='css/ui.css'></link>
+  </head>
+  <body id='body'>
+    <script src="chs.js"></script>
+    <script src="core.js"></script>
+    <!-- DUMMY ID -->
+    <div id='noop'></div>
+
+    <!-- HEADER NAV BAR -->
+    <div class='nav'>
+      <div id='navContainer'>
+        <div class='pointsContainer'>Points:&nbsp;<span id='points'>0</span></div>
+        <div class='gameOptionPoints'><img src='img/rock-icon.png' class='pointsIcon' />&nbsp;<div id='rockPoints' className='pointsDiv'>0</div></div>
+        <div class='gameOptionPoints'><img src='img/paper-icon.png' class='pointsIcon' />&nbsp;<span id='paperPoints'>0</span></div>
+        <div class='gameOptionPoints'><img src='img/scissor-icon.png' class='pointsIcon' />&nbsp;<span id='scissorPoints'>0</span></div>
+        <div id='lizardPointsRow' class='gameOptionPoints'><img src='img/lizard-icon.png' class='pointsIcon' />&nbsp;<span id='lizardPoints'>0</span></div>
+        <div id='spockPointsRow' class='gameOptionPoints'><img src='img/spock-icon.png' class='pointsIcon' />&nbsp;<span id='spockPoints'>0</span></div>
+      </div>
+    </div>
+
+    <!-- ROOT -->
+    <div id='root'>
+      <div id='flexRoot'>
+        <!-- BOARD -->
+        <div id='boardPanel'>
+          <!-- STATS AND SETTINGS BUTTONS -->
+          <div>
+            <td colspan='6'>
+              <div id='boardButtonRow'>
+                <button id='statsButton'>
+                  <div class='button_label'>Stats</div>
+                </button>
+                <button id='settingsButton'>
+                  <div class='button_label'>Settings</div>
+                </button>
+              </div>
+            </td>
+          </div>
+          <!-- CUSTOM SELECTION ROW -->
+          <div id='customSelectionRow'>
+            <div id='customSelectionRandomDiv' class='customSelection'></div>
+            <div id='customSelectionDiv' class='customSelection'></div>
+          </div>
+          <!-- TIMER ROW -->
+          <div>
+            <div id='boardTimeRow' colspan='6'>
+              <span>Timer:</span>
+              <span id='gameTimer'></span>
+              <br>
+              <br>
+            </div>
+          </div>
+          <!-- BOARD HEADER -->
+          <table>
+            <tbody>
+              <tr>
+                <td></td>
+                <td>Player</td>
+                <td></td>
+                <td class="textAlignRight">Bot</td>
+                <td class="textAlignRight">Streak (mulls)</td>
+                <td class="textAlignRight">Points</td>
+              </tr>
+              <!-- BOARD CONTENT -->
+              <tr>
+                <td id='playerGameOptionResult'>WIN!</td>
+                <td id='playerGameOptionChoice'>ROCK?</td>
+                <td id='playerGameOptionVs'>vs.</td>
+                <td id='botGameOptionChoice'>NOT ROCK?</td>
+                <td id='gameOptionStreak'></td>
+                <td id='gameOptionPoints'></td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- POINTS PER ROUND RESULT -->
+          <div>
+            <!-- PER ROUND STATS -->
+            <br><br>
+            <span>Points:</span>
+            <span id='pointsEarnedInCurrentRound'></span>
+            <br>
+            <span>Max Streak:</span>
+            <span id='maxStreakInCurrentRound'></span>
+            <span id='pointsEarnedInCurrentRound'></span>
+            <br>
+            <span>W / L / T :</span>
+            <span id='winTieLossInCurrentRound'></span>
+            <span id='pointsEarnedInCurrentRound'></span>
+            <!-- INLINE STATS -->
+            <br><br>
+            <span>Avg Pts / round:</span>
+            <span id='statsAvgPointsEarnedPerRound'></span>
+            <br>
+            <span>Avg Pts / sec:</span>
+            <span id='statsAvgPointsEarnedPerSecond'></span>
+          </div>
+        </div>
+        
+        <!-- UPGRADES: MIDDLE COLUMN -->
+        <div id='leftUpgrades'>
+          <!-- POINT UPGRADES -->
+          <h2 id='pointUpgradeHeader'>Point Upgrades!</h2>
+          <div id='pointUpgradePanel'>
+            <div class='upgradeRow' id='buyGameSpeedUpgrade'></div>
+            <div class='upgradeRow' id='buyFlatPointsUpgrade'></div>
+            <div class='upgradeRow' id='buyWinStreakMultiplierUpgrade'></div>
+            <div class='upgradeRow' id='buyStreakMulliganUpgrade'></div>
+            <div class='upgradeRow' id='buyTiesEarnPointsUpgrade'></div>
+            <div class='upgradeRow' id='buyTiesDoNotBreakStreakUpgrade'></div>
+            <div class='upgradeRow' id='buyPlayMultipleGameOptionsUpgrade'></div>
+            <div class='upgradeRow' id='buyUnlockPaperScissorRockPoints'></div>
+            <div class='upgradeRow' id='buyGameOptionEqualizer'></div>
+            <div class='upgradeRow' id='buyTiesExtendStreakUpgrade'></div>
+            <div class='upgradeRow' id='buyRockNeverLosesUpgrade'></div>
+            <div class='upgradeRow' id='buyRockAlwaysWinsUpgrade'></div>
+            <div class='upgradeRow' id='buyGameOptionPrestigeUpgrade'></div>
+            <div class='upgradeRow' id='buyRockWinsMultiplyCurrentStreak'></div>
+          </div>
+        </div>
+      
+        <div id='rightUpgrades'>
+          <!-- PAPER UPGRADES -->
+          <h2 id='paperUpgradeHeader'>Paper Upgrades!</h2>
+          <div>
+            <div class='upgradeRow' id='buyPaperGameOptionWinMultiplierUpgrade'></div>
+            <div class='upgradeRow' id='buyBonusPaperEarnedPerWin'></div>
+            <div class='upgradeRow' id='buyPaperFlatPointsUpgrade'></div>
+            <div class='upgradeRow' id='buyConvertPaperGameOptionToRockUpgrade'></div>
+            <div class='upgradeRow' id='buyPaperChangeGameOptionToRockUpgrade'></div>
+          </div>
+          
+          <!-- SCISSOR UPGRADES -->
+          <h2 id='scissorUpgradeHeader'>Scissor Upgrades!</h2>
+          <div>
+            <div class='upgradeRow' id='buyScissorGameOptionWinMultiplierUpgrade'></div>
+            <div class='upgradeRow' id='buyBonusScissorsEarnedPerWin'></div>
+            <div class='upgradeRow' id='buyScissorGameSpeedUpgrade'></div>
+            <div class='upgradeRow' id='buyConvertScissorGameOptionToRockUpgrade'></div>
+            <div class='upgradeRow' id='buyScissorChangeGameOptionToRockUpgrade'></div>
+          </div>
+
+          <!-- ROCK UPGRADES -->
+          <h2 id='rockUpgradeHeader'>Rock Upgrades!</h2>
+          <div>
+            <div class='upgradeRow' id='buyRockGameOptionWinMultiplierUpgrade'></div>
+            <div class='upgradeRow' id='buyBonusRocksEarnedPerWin'></div>
+            <div class='upgradeRow' id='buyRockStreakIncrementUpgrade'></div>
+          </div>
+          
+          <!-- LIZARD UPGRADES -->
+          <h2 id='lizardUpgradeHeader'>Lizard Upgrades!</h2>
+          <div>
+            <div class='upgradeRow' id='buyLizardGameOptionWinMultiplierUpgrade'></div>
+            <div class='upgradeRow' id='buyBonusLizardsEarnedPerWin'></div>
+            <div class='upgradeRow' id='buyLizardWinStreakMultiplierUpgrade'></div>
+            <div class='upgradeRow' id='buyConvertLizardGameOptionToRockUpgrade'></div>
+            <div class='upgradeRow' id='buyLizardChangeGameOptionToRockUpgrade'></div>
+          </div>
+
+          <!-- SPOCK UPGRADES -->
+          <h2 id='spockUpgradeHeader'>Spock Upgrades!</h2>
+          <div>
+            <div class='upgradeRow' id='buySpockGameOptionWinMultiplierUpgrade'></div>
+            <div class='upgradeRow' id='buyBonusSpocksEarnedPerWin'></div>
+            <div class='upgradeRow' id='buySpockCriticalWinUpgrade'></div>
+            <div class='upgradeRow' id='buyConvertSpockGameOptionToRockUpgrade'></div>
+            <div class='upgradeRow' id='buySpockChangeGameOptionToRockUpgrade'></div>
+          </div>
+        </div>
+        <!-- EXPERIMENTS PANEL -->
+        <div id='experimentsPanel'>
+          <h3>Experiments</h3>
+          <button id='experimentNewRound'><div class='button_label'>New Round</div></button>
+          <div>
+            <input id='experimentFreeModeCheckbox' type='checkbox' />
+            <label for='experimentFreeModeCheckbox'>Free Mode</label>
+          </div>
+          <div>
+            <input id='experimentSellModeCheckbox' type='checkbox' />
+            <label for='experimentSellModeCheckbox'>Sell Mode</label>
+          </div>
+          <div>
+            <input id='experimentPauseGameButton' type='checkbox' />
+            <label for='experimentPauseGameButton'>Pause</label>
+          </div>
+          <!-- <div>
+            <input id='experimentUnlockAllUpgradesCheckbox' type='checkbox' />
+            <label for='experimentUnlockAllUpgradesCheckbox'>Unlock All Upgrades <br>(except upgrades with pre-requisites)</label>
+          </div> -->
+          <!-- <div>
+            <input id='experimentUnlockAllItemsCheckbox' type='checkbox' />
+            <label for='experimentUnlockAllItemsCheckbox'>Unlock All Items</label>
+          </div> -->
+          <br>
+          <div>
+            <label>Game Speed Multiplier</label>
+            <select id='experimentGameSpeedMultiplierSelector'>
+            </select>
+          </div>
+            <!-- SPEED RUN PANEL -->
+          <div id='speedRunPanel'>
+            <h3>Speed Run</h3>
+            <button id='speedRunNewGameButton'><div class='button_label'>New Game</div></button>
+            <button id='speedRunNextPrestige'><div class='button_label'>Prestige</div></button>
+            <button id='speedRunResetCurrentPrestige'><div class='button_label'>Reset Prestige</div></button>
+            <!-- <button id='speedRunBuyAllAffordableUpgradesButton'><div class='button_label'>Buy All Upgrades</div></button> -->
+            <button id='speedRunExecuteButton'><div class='button_label'>Speed Run!</div></button>
+            <div>
+              <label>Speed Run Round Limit:</label>
+              <select id='speedRunRoundLimitSelector'>
+              </select>
+            </div>
+            <div>
+              <input id='speedRunAutoUpgradeCheckbox' type='checkbox' />
+              <label for='speedRunAutoUpgradeCheckbox'>Auto-Purchase Upgrades</label>
+            </div>
+            <div>
+              <input id='speedRunHideGameOptionUpgradePurchases' type='checkbox' />
+              <label for='speedRunHideGameOptionUpgradePurchases'>Hide Game Option Upgrade Purchases</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- SPEED RUN OUTPUT -->
+    <div id="speedRunOutputPanel">
+      <div class="speedRunResultLeft">
+        <table id='speedRunUpgradeResults'>
+        </table>
+      </div>
+      <div class="speedRunResultRight">
+        <table id='speedRunAvgPointsResults'>
+        </table>
+      </div>
+    </div>      
+
+    <!-- SETTINGS MODAL -->
+    <div id='settingsModal' class='modal modal-content'>
+      <h3>Saving</h3>
+      <button id='gameRulesButton'>
+        <div class='button_label'>Game Rules</div>
+      </button>
+      <button id='helpButton'>
+        <div class='button_label'>HELP!</div>
+      </button>
+      <button id='changeLogButton'>
+        <div class='button_label'>Change Log</div>
+      </button>
+      <button id='manualSaveGameButton'>
+        <div class='button_label'>Save Game</div>
+      </button>
+      <br><br>
+      <button id='copySaveJson'>
+        <div class='button_label'>Export Save JSON (Copy)</div>
+      </button>
+      <button id='importSaveOpenModalButton'>
+        <div class='button_label'>Import Save JSON</div>
+      </button>
+      <br><br>
+      <button id='newGame'>
+        <div class='button_label'>New Game</div>
+      </button>
+      <!-- <button id='clearAllStats'>
+        <div class='button_label'>Reset All Stats</div>
+      </button> -->
+    </div>
+
+    <!-- STATS MODAL -->
+    <div id='statsModal' class='modal modal-content'>
+        <h1>Game Stats!</h1>
+        <!-- TRIPOMETER SETTINGS -->
+        <input type='checkbox' id='statsTripometerDisplayCheckbox' />
+        <label for='statsTripometerDisplayCheckbox'>Display tripometer<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(temporary stats)</label>
+        <br><br>
+        <button id='resetTripometerStatsButton'>
+          <div class='button_label'>Reset Tripometer</div>
+        </button>
+        <!-- Core stats content -->
+        <div class='statsContent'>
+          <div class='statsContentPanel'>
+            <!-- Points earned stats -->
+            <h2>Points earned</h2>
+            <div>Total pts earned: <span id='statsTotalPointsEarned'></span></div>
+            <div>Total pts earned from ties: <span id='statsTotalPointsEarnedFromTies'></span></div>
+            <div>Total paper earned: <span id='statsTotalPapersEarned'></span></div>
+            <div>Total scissors earned: <span id='statsTotalScissorsEarned'></span></div>
+            <div>Total rocks earned: <span id='statsTotalRocksEarned'></span></div>
+            <div id='statsTotalLizardsEarnedDiv'>Total lizards earned: <span id='statsTotalLizardsEarned'></span></div>
+            <div id='statsTotalSpocksEarnedDiv'>Total spocks earned: <span id='statsTotalSpocksEarned'></span></div>
+            <div>Total wins with paper: <span id='statsTotalWinsWithPaper'></span></div>
+            <div>Total wins with scissors: <span id='statsTotalWinsWithScissor'></span></div>
+            <div>Total wins with rock: <span id='statsTotalWinsWithRock'></span></div>
+            <div id='statsTotalWinsWithLizardDiv'>Total wins with lizard: <span id='statsTotalWinsWithLizard'></span></div>
+            <div id='statsTotalWinsWithSpockDiv'>Total wins with spock: <span id='statsTotalWinsWithSpock'></span></div>
+            <h2>Win / Loss / Ties</h2>
+            <div>Total wins: <span id='statsTotalWins'></span></div>
+            <div>Total ties: <span id='statsTotalTies'></span></div>
+            <div>Total losses: <span id='statsTotalLosses'></span></div>
+            <div>Longest streak: <span id='statsLongestStreak'></span></div>
+            <div>Mulligans used: <span id='statsMulligansUsed'></span></div>
+            <div>Highest round points <span id='statsHighestRoundPoints'></span></div>
+            <div>Highest single game points: <span id='statsHighestSingleGamePoints'></span></div>
+            <div>Total time played: <span id='statsTotalTimePlayed'></span></div>
+          </div>
+        </div>
+    </div>
+    
+    <!-- HELP MODAL -->
+    <div id='helpModal' class='modal'>
+      <div class='modal-content'>
+        <h2>Welcome to Rock Always Wins Idle!</h2>
+        <p>The objective of this game is to earn points by winning games of Paper, Scissor, Rock (that's the right order, don't question it).
+          <br><br>
+          Use points to speed up the game, earn more points per win, and so on. 
+          <br>
+          <br>
+          The objective is to win! WIN! WIN!
+          <br><br>
+          In case you didn't know: at the end of the day, ROCK ALWAYS WINS!
+        </p>
+      </div>
+    </div>
+
+    <!-- NEW GAME CONFIRMATION -->
+    <div id='newGameConfirmationModal' class='modal modal-content'>
+      <h2>Welcome to Rock Always Wins Idle!</h2>
+      <p>Are you sure you want to start a new game?</p>
+        <br><br>
+        <button id='confirmNewGameButton'>
+          <div class='button_label'>NEW GAME!</div>
+        </button>
+        <br><br>
+        <button id='cancelNewGameButton'>
+          <div class='button_label'>ABORT (IT'S A TRAP!)</div>
+        </button>
+      </p>
+    </div>
+    
+    <!-- SAVE VERSION MODAL -->
+    <div id='saveVersionWarningModal' class='modal'>
+      <div class='modal-content'>
+        <h2>WARNING: Your saved game is from an older version!</h2>
+        <p>(Welcome back!) Game content and save data may not work as expected.
+          <br><br>
+          I try not to break things, but this game is still in early development. There have been significant games changes since you last played. 
+          <br><br>
+          I would suggest that you start a new game.
+          <br><br>
+          That said, you do you friend!  Good luck!
+        </p>
+      </div>
+    </div>
+    
+    <!-- PRESTIGE TOAST -->
+    <div id='prestigeModal' class='modal modal-content'>
+      <h2>ROCK ALWAYS WINS!</h2>
+      <div>YOU DID IT! We're adding one more game option now. Good luck!</div>
+      <div>New rules (Settings > Game Rules):</div>
+      <div id='prestigeGameRulesDiv'></div>
+    </div>
+
+    <!-- SAVE TOAST (warm buttery delicious toast...) -->
+    <div id='saveToastModal'>
+      <div>Game Saved!</div>
+    </div>
+
+    <!-- IMPORT SAVE MODAL -->
+    <div id='importSaveModal' class='modal modal-content'>
+      <h2>Import Save JSON!</h2>
+      <p>WARNING: This is non-reversible and will delete your current save. Recommend you export your save first!</p>
+      <textarea id='importSaveTextArea'></textarea>
+      <div id='importSaveButtonRowDiv'>
+        <button id='importSaveModalButton'>
+          <div class='button_label'>Import Save (No Going Back!)</div>
+        </button>
+        <p id='importSaveErrorLabel'></p>
+      </div>
+    </div>
+
+     <!-- RULES MODAL -->
+     <div id='gameRulesModal' class='modal modal-content'>
+      <h2>Game Rules!</h2>
+      <div id='gameRulesDiv'></div>
+    </div>
+
+    <!-- INCREMENTAL DB VERIFICATION -->
+    <div id='incrementalDbVerificationDiv'>[incrementaldb_verification: ImSuperGreg]</div>
+    
+    <!-- CHANGE LOG MODAL -->
+    <div id='changeLogModal' class='modal modal-content'>
+      <h2>Change Log: <span id='changeLogCurrentVersion'></span></h2>
+      <h3>Release 0.2.0</h4>
+      <p>Removed</p>
+      <li>-Wells have been removed. Oh well.</li>
+
+      <p>Features</p>
+      <li>- Prestige 1 & 2 game options changed to Big bang rules (Paper, Scissor, Rock, Lizard, Spock).</li>
+      <li>- Prestige 1 & 2 upgrades added (Lizard/Spock).</li>
+      <li>- Added the ability to customize selection of game options.</li>
+
+      <p>Tweaks</p>
+      <li>- Rebalancing of costs/values of most upgrades.</li>
+      <li>- Mulligans are not consumed if you do not have an active streak.</li>
+      <li>- Ties extending streak are now multiple upgrades increasing the percent base streak increment earned.</li>
+      
+      <p>UI</p>
+      <li>- Added game rules in settings menu. Displays W/L/T between game options.</li>
+      <li>- Upgrades now spill over sideways when page is large enough.</li>
+      <li>- Clarified win streak multiplier upgrade is cumulative in tooltip/text.</li>
+      <li>- Stats are hidden if not unlocked via prestige.</li>
+      <li>- Added points per second stat.</li>
+
+      <p>Bug Fixes</p>
+      <li>- Fixed W/L/T was tagged incorrectly.</li>
+      <li>- Fixed stats tripometer.</li>
+      <li>- Fixed bug where selected option would change to rock for no apparent reason.</li>
+    </div>
+  </body>
+</html>

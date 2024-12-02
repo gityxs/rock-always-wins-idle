@@ -1,0 +1,210 @@
+:root {
+  --base-color:  rgba(255, 255, 255, 1);
+  --hover-color: black;
+  --modal-background-color: #292929;
+  --body-font-family: "Russo One";
+  --button-label-font-family: "Russo One";
+  --upgrade-button-width: 400px;
+  --upgrade-row-width: 500px;
+  --board-row-width: 550px;
+}
+
+/* PREVENT MOBILE REFRESH ON PULL-DOWN */
+html, body {
+    overscroll-behavior-y: contain;
+}
+
+h2 {
+  text-align: center;
+}
+
+#root {
+  display: block;
+  padding-top: 70px;
+  padding-left: 10px;
+}
+
+#body {
+  background-color: #292929;
+  color: white;
+  font-family: var(--body-font-family);
+  margin: 0px;
+}
+
+
+/* UPGRADES PANEL */
+#flexRoot {
+  padding-right: 40px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.rightSplit {
+  width: var(--upgrade-row-width);
+}
+#leftUpgrades {
+  width: var(--upgrade-row-width);
+}
+#rightUpgrades {
+  width: var(--upgrade-row-width);
+}
+#leftUpgrade h2 {
+  width: var(--upgrade-button-width);
+  text-align: center;
+}
+#rightUpgrade h2 {
+  width: var(--upgrade-button-width);
+  text-align: center;
+}
+
+
+/* BOARD PANEL */
+#boardPanel {
+  /* display: flex; */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+#board {
+  padding: 5px;
+  width: var(--board-row-width);
+}
+#boardButtonRow {
+  display: flex; 
+}
+#boardButtonRow button {
+  width: 115px;
+  margin-left: 0px;
+}
+#boardTimeRow {
+  padding-top: 8px;
+}
+#boardPlayerSelectionRow {
+  text-align: right;
+}
+.textAlignRight {
+  text-align: right;
+}
+.textAlignLeft {
+  text-align: left;
+}
+#playerGameOptionResult {
+  width: 50px;
+  text-align: left;
+}
+#playerGameOptionChoice {
+  width: 80px;
+  text-align: left;
+}
+#playerGameOptionVs {
+  width: 35px;
+  text-align: left;
+}
+#botGameOptionChoice {
+  width: 80px;
+  text-align: right;
+}
+#gameOptionStreak {
+  width: 120px;
+  text-align: right;
+}
+#gameOptionPoints {
+  width: 95px;
+  text-align: right;
+}
+
+/* EXPERIMENTS PANEL */
+#experimentsPanel {
+  border: black 5px solid;
+  width: 300px;
+  height: fit-content;
+  padding: 8px;
+  margin-left: 50px;
+  /* HIDE WHEN IN RELEASE */
+  display: none;
+}
+#experimentsPanel > h3 {
+  margin: 5px;
+}
+#experimentsPanel button {
+  width: 275px;
+}
+
+/* SPEED RUN PANEL */
+#speedRunTimeRow {
+  width: 50px;
+}
+#speedRunUpgradeRow {
+  width: 200px;
+}
+#speedRunCostRow {
+  width: 100px;
+}
+#speedRunResultLeftPanel {
+  flex-direction: column;
+  width: 600px;
+  padding-right: 40px;
+}
+#speedRunOutputPanel {
+  display: flex;
+}
+#speedRunOutputPanel div {
+  padding-left: 60px;
+}
+#speedRunAvgPointsResults td {
+  width: 80px;
+}
+
+#incrementalDbVerificationDiv {
+  display: none;
+}
+
+/* CUSTOM SELECTIONS PANEL */
+#customSelectionRow {
+  display: flex;
+  width: var(--board-row-width);
+}
+#customSelectionRandomDiv {
+  width: 120px;
+}
+#customSelectionDiv {
+  width: 430px;
+}
+.customSelection {
+  padding-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.customSelection div {
+  padding-top: 5px;
+  display: flex;
+}
+
+.customSelection button {
+  border: none;
+  width: 20px;
+  height: 20px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.customSelection button div {
+  border: none;
+  height: 20px;
+  text-align: center;
+  padding-left: 6px;
+  padding-top: 2px;
+}
+
+.all_btn_class {
+  width: 39px !important;
+}
+
+.customSelection img {
+  margin-left: 10px;
+}
+.customSelection span {
+  margin-left: 8px;
+  margin-right: 8px;
+  /* Prevent UI twitching when changing options. */
+  width: 10px;
+}
