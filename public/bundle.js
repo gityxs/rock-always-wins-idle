@@ -4274,7 +4274,7 @@ var BonusGameOptionPointsEarnedPerWin = exports.BonusGameOptionPointsEarnedPerWi
     _createClass(BonusGameOptionPointsEarnedPerWin, [{
         key: "updateUiProperties",
         value: function updateUiProperties() {
-            this.setUiText(this.game.ui.capitalizeFirstLetter(this.upgradeOptionType) + "s Per Win: " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), " " + this.upgradeOptionType.toLowerCase() + "s") + " " + this.getPrettyPrintCost() + " " + this.upgradeOptionType.toLowerCase() + "s");
+            this.setUiText(cnItem(this.game.ui.capitalizeFirstLetter(this.upgradeOptionType)) + " 每次获胜: " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), " " + cnItem(this.upgradeOptionType.toLowerCase()) + "") + " " + this.getPrettyPrintCost() + " " + cnItem(this.upgradeOptionType.toLowerCase()) + "");
         }
         // public getUpgradeValue(useNextLevel: boolean = false): number {
         //   return DEFAULT_GAME_OPTION_BONUS_POINTS_EARNED_PER_WIN + GAME_OPTION_BONUS_POINTS_EARNED_PER_WIN_BASE_INCREMENT * this.getUpgradeLevel(useNextLevel);
@@ -4451,7 +4451,7 @@ var ChangeGameOptionToRockUpgrade = exports.ChangeGameOptionToRockUpgrade = func
     _createClass(ChangeGameOptionToRockUpgrade, [{
         key: "updateUiProperties",
         value: function updateUiProperties() {
-            this.setUiText(this.game.ui.capitalizeFirstLetter(this.getUpgradeType()) + " Switch to Rock: " + this.getStatArrowText(this.getUpgradeValue() * 100, this.getUpgradeValue(true) * 100, "%") + " " + this.getPrettyPrintCost() + " " + this.upgradeOptionType.toLowerCase() + "s");
+            this.setUiText(cnItem(this.game.ui.capitalizeFirstLetter(this.getUpgradeType())) + " 切换为石头: " + this.getStatArrowText(this.getUpgradeValue() * 100, this.getUpgradeValue(true) * 100, "%") + " " + this.getPrettyPrintCost() + " " + cnItem(this.upgradeOptionType.toLowerCase()) + "");
         }
     }, {
         key: "getCost",
@@ -4890,7 +4890,7 @@ var GameOptionWinMultiplierUpgrade = exports.GameOptionWinMultiplierUpgrade = fu
         value: function updateUiProperties() {
             var beforeVal = this.game.ui.getDecimalPrettyPrintNumber(1 + this.getUpgradeValue(), 1);
             var afterVal = this.game.ui.getDecimalPrettyPrintNumber(1 + this.getUpgradeValue(true), 1);
-            this.setUiText(this.game.ui.capitalizeFirstLetter(this.upgradeOptionType) + "s Win Multiplier: " + this.getStatArrowText(beforeVal, afterVal, "x") + " " + this.getPrettyPrintCost() + " " + this.upgradeOptionType.toLowerCase() + "s");
+            this.setUiText(cnItem(this.game.ui.capitalizeFirstLetter(this.upgradeOptionType)) + " 获胜乘数: " + this.getStatArrowText(beforeVal, afterVal, "x") + " " + this.getPrettyPrintCost() + " " + cnItem(this.upgradeOptionType.toLowerCase()) + "");
         }
     }, {
         key: "getPreReqUpgradeKeys",
@@ -5112,7 +5112,7 @@ var PaperFlatPointsUpgrade = exports.PaperFlatPointsUpgrade = function (_Upgrade
     _createClass(PaperFlatPointsUpgrade, [{
         key: "updateUiProperties",
         value: function updateUiProperties() {
-            this.setUiText("Bonus Base Points Per Win " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), ' pts') + ": " + this.getPrettyPrintCost() + " " + this.getPointType().toLowerCase());
+            this.setUiText("每次胜利的额外基础点数 " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), ' 点数') + ": " + this.getPrettyPrintCost() + " " + cnItem(this.getPointType().toLowerCase()));
         }
         // public getUpgradeValue(useNextLevel?: boolean): number {
         //   const level = this.getUpgradeLevel(useNextLevel);
@@ -5177,7 +5177,7 @@ var RockStreakIncrementUpgrade = exports.RockStreakIncrementUpgrade = function (
         value: function updateUiProperties() {
             var currVal = this.game.ui.getDecimalPrettyPrintNumber(this.getUpgradeValue(), 1);
             var nextVal = this.game.ui.getDecimalPrettyPrintNumber(this.getUpgradeValue(true), 1);
-            this.setUiText("Base Streak Increment " + this.getStatArrowText(currVal, nextVal, '+ streak') + ": " + this.getPrettyPrintCost() + " " + this.getPointType().toLowerCase());
+            this.setUiText("基础连胜增加 " + this.getStatArrowText(currVal, nextVal, '+ 连胜') + ": " + this.getPrettyPrintCost() + " " + cnItem(this.getPointType().toLowerCase()));
         }
     }, {
         key: "getPreReqUpgradeKeys",
@@ -5237,7 +5237,7 @@ var ScissorGameSpeedUpgrade = exports.ScissorGameSpeedUpgrade = function (_Upgra
     _createClass(ScissorGameSpeedUpgrade, [{
         key: "updateUiProperties",
         value: function updateUiProperties() {
-            this.setUiText("Game Speed " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), 'ms per round') + ": " + this.getPrettyPrintCost() + " " + this.getPointType().toLowerCase());
+            this.setUiText("游戏速度 " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), 'ms 每回合') + ": " + this.getPrettyPrintCost() + " " + cnItem(this.getPointType().toLowerCase()));
         }
     }, {
         key: "getUpgradeValue",
@@ -5398,7 +5398,7 @@ var FlatPointsUpgrade = exports.FlatPointsUpgrade = function (_Upgrade) {
     _createClass(FlatPointsUpgrade, [{
         key: "updateUiProperties",
         value: function updateUiProperties() {
-            this.setUiText("Base Points Per Win " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), " pts") + ": " + this.getPrettyPrintCost() + " pts");
+            this.setUiText("基础点数每次获胜 " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), " 点数") + ": " + this.getPrettyPrintCost() + " 点数");
         }
     }, {
         key: "getUpgradeValue",
@@ -5536,7 +5536,7 @@ var GameSpeedUpgrade = exports.GameSpeedUpgrade = function (_Upgrade) {
     _createClass(GameSpeedUpgrade, [{
         key: "updateUiProperties",
         value: function updateUiProperties() {
-            this.setUiText("Game Speed " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), " speed") + ": " + this.getPrettyPrintCost() + " pts");
+            this.setUiText("游戏速度 " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), " 速度") + ": " + this.getPrettyPrintCost() + " 点数");
         }
     }, {
         key: "getCost",
@@ -5602,7 +5602,7 @@ var PlayMultipleGameOptionsUpgrade = exports.PlayMultipleGameOptionsUpgrade = fu
     _createClass(PlayMultipleGameOptionsUpgrade, [{
         key: "updateUiProperties",
         value: function updateUiProperties() {
-            this.setUiText("Play Multiple Choices " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), " selections") + ": " + this.getPrettyPrintCost() + " pts");
+            this.setUiText("多重选择 " + this.getStatArrowText(this.getUpgradeValue(), this.getUpgradeValue(true), " 选择") + ": " + this.getPrettyPrintCost() + " 点数");
         }
     }, {
         key: "getCost",
@@ -5786,7 +5786,7 @@ var TiesEarnPointsUpgrade = exports.TiesEarnPointsUpgrade = function (_Upgrade) 
         value: function updateUiProperties() {
             var beforePercent = this.game.ui.getDecimalPrettyPrintNumber(this.getUpgradeValue() * 100, 0);
             var afterPercent = this.game.ui.getDecimalPrettyPrintNumber(this.getUpgradeValue(true) * 100, 0);
-            this.setUiText("Ties Earn Points " + this.getStatArrowText(beforePercent, afterPercent, "% win pts per tie") + ": " + this.getPrettyPrintCost() + " pts");
+            this.setUiText("平局获取点数 " + this.getStatArrowText(beforePercent, afterPercent, "% 获胜点数每平局") + ": " + this.getPrettyPrintCost() + " 点数");
         }
     }, {
         key: "getCost",
@@ -5903,7 +5903,7 @@ var RockWinsMultiplyCurrentStreak = exports.RockWinsMultiplyCurrentStreak = func
         value: function updateUiProperties() {
             var currVal = this.getUpgradeValue();
             var nextVal = this.getUpgradeValue(true);
-            this.setUiText("Rock Wins Multiply Streak " + this.getStatArrowText(currVal, nextVal, "x streak") + ": " + this.getPrettyPrintCost() + " pts");
+            this.setUiText("石头获胜乘以连胜 " + this.getStatArrowText(currVal, nextVal, "x 连胜") + ": " + this.getPrettyPrintCost() + " 点数");
         }
     }, {
         key: "getCost",
@@ -5977,7 +5977,7 @@ var StreakMulliganUpgrade = exports.StreakMulliganUpgrade = function (_Upgrade) 
         value: function updateUiProperties() {
             var currLevel = this.getUpgradeLevel();
             var nextLevel = this.getUpgradeLevel(true);
-            this.setUiText("Streak Mulligans " + this.getStatArrowText(currLevel, nextLevel, " mulligans") + ": " + this.getPrettyPrintCost() + " pts");
+            this.setUiText("连胜加击 " + this.getStatArrowText(currLevel, nextLevel, " 加击") + ": " + this.getPrettyPrintCost() + " 点数");
         }
     }, {
         key: "getCost",
@@ -6088,7 +6088,7 @@ var TiesExtendStreakUpgrade = exports.TiesExtendStreakUpgrade = function (_Upgra
         value: function updateUiProperties() {
             var currLevel = this.game.ui.getDecimalPrettyPrintNumber(this.getUpgradeValue() * 100, 0);
             var nextLevel = this.game.ui.getDecimalPrettyPrintNumber(this.getUpgradeValue(true) * 100, 0);
-            this.setUiText("Ties Extend Win Streak: " + this.getStatArrowText(currLevel, nextLevel, "% streak") + ": " + this.getPrettyPrintCost() + " pts");
+            this.setUiText("平局延续连胜纪录: " + this.getStatArrowText(currLevel, nextLevel, "% 连胜") + ": " + this.getPrettyPrintCost() + " 点数");
         }
     }, {
         key: "getMaxUpgradeLevel",
@@ -6158,7 +6158,7 @@ var WinStreakMultiplierUpgrade = exports.WinStreakMultiplierUpgrade = function (
         value: function updateUiProperties() {
             var beforeVal = this.game.ui.getDecimalPrettyPrintNumber(1 + this.getUpgradeValue(), 2);
             var afterVal = this.game.ui.getDecimalPrettyPrintNumber(1 + this.getUpgradeValue(true), 2);
-            this.setUiText("Win Streak Multiplier " + this.getStatArrowText(beforeVal, "+" + afterVal, " per win") + ": " + this.getPrettyPrintCost() + " pts");
+            this.setUiText("连胜乘数 " + this.getStatArrowText(beforeVal, "+" + afterVal, " 每次获胜") + ": " + this.getPrettyPrintCost() + " 点数");
         }
     }, {
         key: "getCost",
@@ -6223,7 +6223,7 @@ var generateGameRulesHtml = exports.generateGameRulesHtml = function generateGam
                     } else {
                         throw "Invalid gameResultType for generateGameRulesText " + result + ".";
                     }
-                    htmlResult += gameOption + " " + compareText + " " + otherOption + "\n";
+                    htmlResult += cnItem(gameOption) + " " + compareText + " " + cnItem(otherOption) + "\n";
                 }
             } catch (err) {
                 _didIteratorError2 = true;
